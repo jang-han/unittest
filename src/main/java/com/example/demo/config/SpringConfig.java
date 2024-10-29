@@ -91,9 +91,9 @@ public class SpringConfig {
 		return new JobBuilder("helloJob", jobRepository)
 				.incrementer(new RunIdIncrementer())
 				.start(helloTaskletStep1())
-				.next(helloTaskletStep2())
-				.next(helloChunkStep())
-				.validator(jobParametersValidator())
+//				.next(helloTaskletStep2())
+//				.next(helloChunkStep())
+//				.validator(jobParametersValidator())
 				.listener(helloJobExecutionListner)
 				.build();
 	}

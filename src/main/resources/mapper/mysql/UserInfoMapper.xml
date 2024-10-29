@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 위치: src/main/resources/mapper/mysql/UserInfoMapper.xml -->
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.mysql.UserInfoMapper">
+    
+    <select id="selectAllUsers" resultType="com.example.demo.model.mysql.UserInfo">
+        SELECT id, name, email, birthday, occupation
+        FROM user_info
+    </select>
+
+    <select id="selectUserById" parameterType="long" resultType="com.example.demo.model.mysql.UserInfo">
+        SELECT id, name, email, birthday, occupation
+        FROM user_info
+        WHERE id = #{id}
+    </select>
+
+    <insert id="insertUser" parameterType="com.example.demo.model.mysql.UserInfo">
+        INSERT INTO user_info (name, email, birthday, occupation)
+        VALUES (#{name}, #{email}, #{birthday}, #{occupation})
+    </insert>
+
+    <delete id="deleteUserById" parameterType="long">
+        DELETE FROM user_info WHERE id = #{id}
+    </delete>
+
+</mapper>

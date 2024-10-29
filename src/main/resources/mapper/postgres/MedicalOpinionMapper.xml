@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 위치: src/main/resources/mapper/postgres/MedicalOpinionMapper.xml -->
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.postgres.MedicalOpinionMapper">
+    
+    <select id="selectAllMedicalOpinions" resultType="com.example.demo.model.postgres.MedicalOpinion">
+        SELECT id, name, email, height, weight
+        FROM medical_opinion
+    </select>
+
+    <select id="selectMedicalOpinionById" parameterType="long" resultType="com.example.demo.model.postgres.MedicalOpinion">
+        SELECT id, name, email, height, weight
+        FROM medical_opinion
+        WHERE id = #{id}
+    </select>
+
+    <insert id="insertMedicalOpinion" parameterType="com.example.demo.model.postgres.MedicalOpinion">
+        INSERT INTO medical_opinion (name, email, height, weight)
+        VALUES (#{name}, #{email}, #{height}, #{weight})
+    </insert>
+
+    <delete id="deleteMedicalOpinionById" parameterType="long">
+        DELETE FROM medical_opinion WHERE id = #{id}
+    </delete>
+
+</mapper>
