@@ -55,12 +55,14 @@ public class HelloTasklet1 implements Tasklet {
 
                 log.info("처리 중: {}", csvFile.getName());
 
-                // 첫 번째 줄 스킵
-                br.readLine();
-
-                // NG 리스트 파일에 헤더 추가
+                // NG 리스트 파일에 헤더와 구분선 추가
                 ngListWriter.write("Name,Date of Birth,Insured Number,Additional Info");
                 ngListWriter.newLine();
+                ngListWriter.write("-------------------------------------------------");
+                ngListWriter.newLine();
+
+                // 첫 번째 줄 스킵
+                br.readLine();
 
                 String line;
                 while ((line = br.readLine()) != null) {
@@ -98,7 +100,7 @@ public class HelloTasklet1 implements Tasklet {
             deleteIfEmpty(okFilePath, "OK");
             deleteIfEmpty(ngFilePath, "NG");
 
-            // NG 리스트 파일이 헤더만 있을 경우 삭제
+            // NG 리스트 파일이 헤더와 구분선 외에 데이터가 없는 경우 삭제
             if (!ngListHasData) {
                 deleteIfEmpty(NG_TEXT_LIST_PATH, "NG 텍스트 리스트");
             }
