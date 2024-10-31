@@ -205,3 +205,45 @@ public class CustomDecider implements JobExecutionDecider {
         }
     }
 }
+
+-----
+
+public class NameLengthValidator {
+
+    // 전각 문자인지 확인하는 메서드
+    private static boolean isFullWidth(char c) {
+        return (c >= '\uFF01' && c <= '\uFF5E') || (c >= '\u3000' && c <= '\u30FF') || (c >= '\u4E00' && c <= '\u9FFF');
+    }
+
+    // 이름의 유효성을 검사하는 메서드 (문자열과 최대 바이트 수를 인수로 받음)
+    public static boolean isValidNameLength(String name, int maxBytes) {
+        int byteCount = 0;
+
+        for (char c : name.toCharArray()) {
+            if (isFullWidth(c)) {
+                byteCount += 2;  // 전각 문자는 2바이트로 계산
+            } else {
+                byteCount += 1;  // 반각 문자는 1바이트로 계산
+            }
+
+            // 총 바이트가 maxBytes를 초과할 경우 false 반환
+            if (byteCount > maxBytes) {
+                return false;
+            }
+        }
+        return true;  // maxBytes 이내일 경우 true 반환
+    }
+
+    public static void main(String[] args) {
+        // 테스트 케이스 예시
+        String name1 = "山田太郎";           // 전각 문자만 포함, 길이 6자 (12바이트)
+        String name2 = "Taro123456789012"; // 반각 문자 15자 (15바이트)
+        String name3 = "山田太郎Taro123456"; // 전각 + 반각, 12자 (30바이트)
+
+        // 테스트 실행
+        System.out.println("name1 유효성 검사 (30 바이트): " + isValidNameLength(name1, 30));  // true 예상
+        System.out.println("name2 유효성 검사 (30 바이트): " + isValidNameLength(name2, 30));  // true 예상
+        System.out.println("name3 유효성 검사 (20 바이트): " + isValidNameLength(name3, 20));  // false 예상
+    }
+}
+
